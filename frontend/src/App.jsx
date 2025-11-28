@@ -7,6 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Perfil from './pages/Perfil';
 import MisRecetas from './pages/MisRecetas';
 import NuevaReceta from './pages/NuevaReceta';
 import EditarReceta from './pages/EditarReceta';
@@ -29,6 +30,16 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/receta/:id" element={<RecetaDetalle />} />
             <Route path="/chef/:id" element={<ChefDetalle />} />
+
+            {/* Rutas protegidas - Usuario */}
+            <Route 
+              path="/perfil" 
+              element={
+                <PrivateRoute>
+                  <Perfil />
+                </PrivateRoute>
+              } 
+            />
 
             {/* Rutas protegidas - Recetas */}
             <Route 

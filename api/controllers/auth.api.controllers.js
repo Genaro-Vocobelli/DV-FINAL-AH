@@ -129,3 +129,74 @@ export function verificarToken(req, res) {
     usuario: req.usuario
   });
 }
+
+/**
+ * PATCH /api/auth/perfil - Actualizar perfil del usuario
+ */
+export async function actualizarPerfil(req, res) {
+  try {
+    const userId = req.usuario.id;
+    const { username, email } = req.body;
+    
+    // Validaciones
+    if (!username && !email) {
+      return res.status(400).json({ 
+        message: 'Debes proporcionar al menos un campo para actualizar' 
+      });
+    }
+    
+    // Actualizar usuario
+    const usuarioActualizado = await usuariosService.actualizarUsuario(userId, {
+      username,
+      email
+    });
+    
+    res.status(200).json({
+      message: 'Perfil actualizado correctamente',
+      usuario: usuarioActualizado
+    });
+    
+  } catch (error) {
+    res.status(400).json({ 
+      message: error.message 
+    });
+  }
+}
+
+/**
+ * PATCH /api/auth/cambiar-password - Cambiar contraseña
+ */
+export async function cambiarPassword(req, res) {
+  try {
+    const userId = req.usuario.id;
+    const { newPassword } = req.body;
+    
+    // Validaciones
+    if (!newPassword) {
+      return res.status(400).json({ 
+        message: 'Debes proporcionar la nueva contraseña' 
+      });
+    }
+    
+    if (newPassword.length < 6) {
+      return res.status(400).json({ 
+        message: 'La contraseña debe tener al menos 6 caracteres' 
+      });
+    }
+    
+    // Cambiar contraseña
+    await usuariosService.actualizarUsuario(userId, {
+      password: newPassword
+    });
+    
+    res.status(200).json({
+      message: 'Contraseña actualizada correctamente'
+    });
+    
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error al cambiar la contraseña',
+      error: error.message 
+    });
+  }
+}

@@ -16,7 +16,7 @@ export function getComentariosByReceta(req, res) {
  */
 export function crearComentario(req, res) {
     const { texto, recetaId } = req.body;
-    const userId = req.usuario.id; // Del middleware
+    const userId = req.usuario.id; 
     
     if (!texto || !recetaId) {
         return res.status(400).json({ message: "Texto y recetaId son obligatorios" });

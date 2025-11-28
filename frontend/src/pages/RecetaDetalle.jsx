@@ -89,14 +89,14 @@ function RecetaDetalle() {
 
           {receta.chef && (
             <div className="chef-info">
-              <h3>👨‍🍳 Chef: {receta.chef.nombre}</h3>
+              <h3>Chef: {receta.chef.nombre}</h3>
               <p>{receta.chef.descripcion}</p>
             </div>
           )}
 
           {receta.link && (
             <div className="video-link">
-              <h3>📺 Video de la receta</h3>
+              <h3>Video de la receta</h3>
               <a href={receta.link} target="_blank" rel="noopener noreferrer" className="btn-primary">
                 Ver en YouTube
               </a>

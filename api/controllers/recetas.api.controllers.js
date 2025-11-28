@@ -22,7 +22,7 @@ export function getRecetaById(req, res) {
         .catch(err => res.status(500).json({ message: "Error al obtener receta" }))
 }
 
-// ← NUEVO: Obtener solo las recetas del usuario autenticado
+//  Obtener solo las recetas del usuario autenticado
 export function getMisRecetas(req, res) {
     // req.usuario viene del middleware de autenticación
     const userId = req.usuario.id;
@@ -33,7 +33,7 @@ export function getMisRecetas(req, res) {
 }
 
 export function createRecipe(req, res) {
-    // ← NUEVO: Agregar userId del usuario autenticado
+    //  Agregar userId del usuario autenticado
     const receta = {
         name: req.body.name,
         description: req.body.description,
@@ -41,7 +41,7 @@ export function createRecipe(req, res) {
         link: req.body.link,
         img: req.body.img,
         chefId: req.body.chefId,
-        userId: req.usuario.id // ← Usuario autenticado
+        userId: req.usuario.id 
     }
     
     // Validaciones
@@ -59,7 +59,7 @@ export async function deleteRecipe(req, res) {
     const userId = req.usuario.id;
     
     try {
-        // ← NUEVO: Verificar que la receta pertenece al usuario
+        //  Verificar que la receta pertenece al usuario
         const esDelUsuario = await services.esRecetaDelUsuario(id, userId);
         
         if (!esDelUsuario) {
@@ -81,7 +81,7 @@ export async function reemplazarRecipe(req, res) {
     const userId = req.usuario.id;
     
     try {
-        // ← NUEVO: Verificar que la receta pertenece al usuario
+        //  Verificar que la receta pertenece al usuario
         const esDelUsuario = await services.esRecetaDelUsuario(id, userId);
         
         if (!esDelUsuario) {
@@ -98,7 +98,7 @@ export async function reemplazarRecipe(req, res) {
             link: req.body.link,
             img: req.body.img,
             chefId: req.body.chefId,
-            userId: userId // Mantener el mismo usuario
+            userId: userId
         }
         
         const recetaEditado = await services.editarReceta(receta);
@@ -114,7 +114,7 @@ export async function actualizarRecipe(req, res) {
     const userId = req.usuario.id;
     
     try {
-        // ← NUEVO: Verificar que la receta pertenece al usuario
+        //  Verificar que la receta pertenece al usuario
         const esDelUsuario = await services.esRecetaDelUsuario(id, userId);
         
         if (!esDelUsuario) {

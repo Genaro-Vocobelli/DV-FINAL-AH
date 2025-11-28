@@ -15,7 +15,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          🍳 Recetas del Chef
+          Recetas del Chef
         </Link>
 
         <div className="navbar-menu">
@@ -32,7 +32,9 @@ function Navbar() {
                 Mis Chefs
               </Link>
               <div className="navbar-user">
-                <span className="user-name">👤 {usuario?.username}</span>
+                <Link to="/perfil" className="user-name-link">
+                  {usuario?.username}
+                </Link>
                 <button onClick={handleLogout} className="btn-logout">
                   Cerrar Sesión
                 </button>

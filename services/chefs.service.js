@@ -7,7 +7,7 @@ const db = client.db("AH20232CP1")
 export async function getChefs(filter = {}) {
   const filterMongo = { eliminado: { $ne: true } };
 
-  // ← NUEVO: Filtro por usuario
+  //  Filtro por usuario
   if (filter.userId != undefined) {
     filterMongo.userId = new ObjectId(filter.userId);
   }
@@ -22,7 +22,7 @@ export async function getChefById(id) {
 }
 
 export async function guardarChef(chef) {
-  // ← NUEVO: Guardar userId
+  //  Guardar userId
   if (chef.userId) {
     chef.userId = new ObjectId(chef.userId);
   }
@@ -36,7 +36,7 @@ export async function editarChef(chef) {
   await client.connect();
   const { id, ...chefData } = chef;
   
-  // ← NUEVO: Convertir userId
+  //  Convertir userId
   if (chefData.userId) {
     chefData.userId = new ObjectId(chefData.userId);
   }
@@ -63,7 +63,7 @@ export async function actualizarChef(chef) {
   return await getChefById(id);
 }
 
-// ← NUEVO: Verificar si el usuario es dueño del chef
+//  Verificar si el usuario es dueño del chef
 export async function esChefDelUsuario(chefId, userId) {
   await client.connect();
   const chef = await db.collection("chefs").findOne({ 

@@ -15,7 +15,7 @@ function RecetaCard({ receta, esPropia = false, onEliminar }) {
         
         {receta.chef && (
           <p className="receta-chef">
-            👨‍🍳 Chef: {receta.chef.nombre}
+            Chef: {receta.chef.nombre}
           </p>
         )}
 

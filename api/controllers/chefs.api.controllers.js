@@ -8,7 +8,7 @@ export function getChefs(req, res) {
         .catch(err => res.status(500).json({ message: "Error al obtener chefs" }))
 }
 
-// ← NUEVO: Obtener solo los chefs del usuario autenticado
+//  Obtener solo los chefs del usuario autenticado
 export function getMisChefs(req, res) {
     const userId = req.usuario.id;
     
@@ -37,7 +37,7 @@ export function createChef(req, res) {
         descripcion: req.body.descripcion,
         especialidad: req.body.especialidad || "",
         experiencia: req.body.experiencia || "",
-        userId: req.usuario.id // ← Usuario autenticado
+        userId: req.usuario.id
     }
     
     if (!chef.nombre || !chef.foto || !chef.descripcion) {

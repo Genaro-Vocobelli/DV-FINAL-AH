@@ -30,7 +30,7 @@ app.use(ChefsRoute)
 app.use("/api/auth", AuthApiRoute)
 app.use("/api/recetas", RecetasApiRoute)
 app.use("/api/chefs", ChefsApiRoute)
-app.use("/api/comentarios", ComentariosApiRoute) // ← NUEVA LÍNEA
+app.use("/api/comentarios", ComentariosApiRoute) 
 
 app.use(express.static("public"));
 app.listen(3333, () => console.log("Servidor funcionando en puerto 3333"));

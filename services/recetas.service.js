@@ -25,7 +25,7 @@ export async function getRecetas(filter = {}) {
     filterMongo.chefId = new ObjectId(filter.chefId);
   }
 
-  // ← NUEVO: Filtro por usuario
+  //  Filtro por usuario
   if (filter.userId != undefined) {
     filterMongo.userId = new ObjectId(filter.userId);
   }
@@ -45,7 +45,7 @@ export async function guardarReceta(receta) {
     receta.chefId = new ObjectId(receta.chefId);
   }
   
-  // ← NUEVO: Guardar userId
+  //  Guardar userId
   if (receta.userId) {
     receta.userId = new ObjectId(receta.userId);
   }
@@ -63,7 +63,7 @@ export async function editarReceta(receta) {
     recetaData.chefId = new ObjectId(recetaData.chefId);
   }
   
-  // ← NUEVO: Convertir userId
+  //  Convertir userId
   if (recetaData.userId) {
     recetaData.userId = new ObjectId(recetaData.userId);
   }
@@ -98,7 +98,7 @@ export async function getProductoById(id) {
   return await getRecetaById(id);
 }
 
-// ← NUEVO: Verificar si el usuario es dueño de la receta
+//  Verificar si el usuario es dueño de la receta
 export async function esRecetaDelUsuario(recetaId, userId) {
   await client.connect();
   const receta = await db.collection("recetas").findOne({ 

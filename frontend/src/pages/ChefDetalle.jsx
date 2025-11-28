@@ -54,13 +54,13 @@ function ChefDetalle() {
             
             {chef.especialidad && (
               <div className="info-item">
-                <strong>🍳 Especialidad:</strong> {chef.especialidad}
+                <strong>Especialidad:</strong> {chef.especialidad}
               </div>
             )}
             
             {chef.experiencia && (
               <div className="info-item">
-                <strong>⏱️ Experiencia:</strong> {chef.experiencia}
+                <strong>Experiencia:</strong> {chef.experiencia}
               </div>
             )}
           </div>

@@ -7,7 +7,7 @@ const router = express.Router()
 // Rutas públicas (sin autenticación)
 router.get("/", controllers.getRecetas)                    // GET /api/recetas - Ver todas
 
-// ← RUTAS ESPECÍFICAS DEBEN IR ANTES DE /:id
+// RUTAS ESPECÍFICAS DEBEN IR ANTES DE /:id
 router.get("/mis-recetas", verificarAutenticacion, controllers.getMisRecetas)  // GET /api/recetas/mis-recetas
 
 // Rutas con parámetro ID (van después de rutas específicas)
