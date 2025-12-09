@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { recetasService } from '../services/recetasService';
-import RecetaCard from '../components/RecetaCard';
-import './Home.css';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { recetasService } from "../services/recetasService";
+import RecetaCard from "../components/RecetaCard";
+import "./Home.css";
 
 function Home() {
   const [recetas, setRecetas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     cargarRecetas();
@@ -18,9 +18,13 @@ function Home() {
     try {
       setLoading(true);
       const data = await recetasService.getAll();
-      setRecetas(data);
+      
+      const recetasPublicadas = data.filter(
+        (r) => r.estado === "publicada" || !r.estado
+      );
+      setRecetas(recetasPublicadas);
     } catch (err) {
-      setError('Error al cargar las recetas');
+      setError("Error al cargar las recetas");
       console.error(err);
     } finally {
       setLoading(false);
@@ -33,13 +37,13 @@ function Home() {
       cargarRecetas();
       return;
     }
-    
+
     try {
       setLoading(true);
       const data = await recetasService.search(searchQuery);
       setRecetas(data);
     } catch (err) {
-      setError('Error al buscar recetas');
+      setError("Error al buscar recetas");
     } finally {
       setLoading(false);
     }
@@ -49,12 +53,14 @@ function Home() {
     try {
       setLoading(true);
       const data = await recetasService.getAll();
-      const filtradas = categoria 
-        ? data.filter(r => r.section.toLowerCase() === categoria.toLowerCase())
+      const filtradas = categoria
+        ? data.filter(
+            (r) => r.section.toLowerCase() === categoria.toLowerCase()
+          )
         : data;
       setRecetas(filtradas);
     } catch (err) {
-      setError('Error al filtrar recetas');
+      setError("Error al filtrar recetas");
     } finally {
       setLoading(false);
     }
@@ -80,27 +86,47 @@ function Home() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
           />
-          <button type="submit" className="btn-search">Buscar</button>
+          <button type="submit" className="btn-search">
+            Buscar
+          </button>
         </form>
       </div>
 
       <div className="categories">
-        <button onClick={() => filtrarPorCategoria('')} className="category-btn">
+        <button
+          onClick={() => filtrarPorCategoria("")}
+          className="category-btn"
+        >
           Todas
         </button>
-        <button onClick={() => filtrarPorCategoria('entradas')} className="category-btn">
+        <button
+          onClick={() => filtrarPorCategoria("entradas")}
+          className="category-btn"
+        >
           Entradas
         </button>
-        <button onClick={() => filtrarPorCategoria('plato principal')} className="category-btn">
+        <button
+          onClick={() => filtrarPorCategoria("plato principal")}
+          className="category-btn"
+        >
           Plato Principal
         </button>
-        <button onClick={() => filtrarPorCategoria('postres')} className="category-btn">
+        <button
+          onClick={() => filtrarPorCategoria("postres")}
+          className="category-btn"
+        >
           Postres
         </button>
-        <button onClick={() => filtrarPorCategoria('bebidas')} className="category-btn">
+        <button
+          onClick={() => filtrarPorCategoria("bebidas")}
+          className="category-btn"
+        >
           Bebidas
         </button>
-        <button onClick={() => filtrarPorCategoria('vegano')} className="category-btn">
+        <button
+          onClick={() => filtrarPorCategoria("vegano")}
+          className="category-btn"
+        >
           Vegano
         </button>
       </div>

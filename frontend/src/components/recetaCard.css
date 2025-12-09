@@ -2,13 +2,13 @@
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .receta-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .receta-image {
@@ -110,4 +110,149 @@
 
 .btn-eliminar:hover {
   background-color: #720303;
+}
+
+.estado-badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+}
+
+.estado-borrador {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.estado-publicada {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.estado-archivada {
+  background-color: #f5f5f5;
+  color: #757575;
+}
+
+
+/* ========== ESTADOS DE RECETA ========== */
+.estado-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.estado-publicada {
+  background-color: #28a745;
+  color: white;
+}
+
+.estado-borrador {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.estado-archivada {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Receta archivada - Efecto visual */
+.receta-archivada {
+  opacity: 0.7;
+  border: 2px dashed #6c757d;
+}
+
+.receta-archivada:hover {
+  opacity: 0.85;
+}
+
+/* Alerta de archivada */
+.alerta-archivada {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  color: #856404;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin: 1rem 0;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Texto bloqueado */
+.texto-bloqueado {
+  color: #6c757d;
+  font-size: 14px;
+  font-style: italic;
+  padding: 0.5rem;
+}
+
+
+/* ========== CAMBIAR ESTADO ========== */
+.cambiar-estado-section {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  border-left: 4px solid #667eea;
+}
+
+.cambiar-estado-section label {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 0.75rem;
+}
+
+.estado-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-estado {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex: 1;
+  min-width: 100px;
+}
+
+.btn-estado:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-estado:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-estado-publicada {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-estado-borrador {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.btn-estado-archivada {
+  background-color: #6c757d;
+  color: white;
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { recetasService } from '../services/recetasService';
-import RecetaCard from '../components/RecetaCard';
+import RecetaCard from '../components/recetaCard';
 import './MisRecetas.css';
 
 function MisRecetas() {
@@ -70,6 +70,7 @@ function MisRecetas() {
               receta={receta}
               esPropia={true}
               onEliminar={handleEliminar}
+              onActualizar={cargarMisRecetas}
             />
           ))}
         </div>

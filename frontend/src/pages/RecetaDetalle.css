@@ -83,102 +83,124 @@
 /* Comentarios */
 .comentarios-section {
   margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 2px solid #f0f0f0;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
 }
 
 .comentarios-section h2 {
-  color: #333;
   margin-bottom: 1.5rem;
+  color: #333;
 }
 
-.comentario-form {
+.comentario-form-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
   margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.comentario-form textarea {
+.comentario-form-container textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   font-size: 16px;
   font-family: inherit;
-  margin-bottom: 1rem;
   resize: vertical;
+  transition: border-color 0.3s;
+  margin-bottom: 1rem;
 }
 
-.comentario-form textarea:focus {
+.comentario-form-container textarea:focus {
   outline: none;
-  border-color: #9b7676;
+  border-color: #667eea;
 }
 
+.comentario-form-container .btn-primary {
+  width: auto;
+  padding: 0.75rem 2rem;
+}
+
+/* Mensaje de login */
 .login-message {
   text-align: center;
   padding: 1.5rem;
-  background-color: #f5f5f5;
-  border-radius: 5px;
-  margin-bottom: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  color: #666;
 }
 
 .login-message a {
-  color: #9b7676;
+  color: #667eea;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .login-message a:hover {
   text-decoration: underline;
 }
-
+/* Lista de comentarios */
 .comentarios-lista {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .comentario {
-  background-color: #f9f9f9;
-  padding: 1.5rem;
+  background-color: white;
+  padding: 1.25rem;
   border-radius: 8px;
-  border-left: 4px solid #9b7676;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s;
+}
+
+.comentario:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
 }
 
 .comentario-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.8rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .comentario-header strong {
   color: #333;
-  font-size: 1rem;
+  font-size: 15px;
 }
 
 .comentario-fecha {
   color: #999;
-  font-size: 0.9rem;
+  font-size: 13px;
 }
 
 .comentario-texto {
   color: #555;
   line-height: 1.6;
   margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .btn-eliminar-comentario {
-  background-color: #e74c3c;
+  margin-top: 0.75rem;
+  padding: 0.4rem 1rem;
+  background-color: #dc3545;
   color: white;
   border: none;
-  padding: 6px 12px;
   border-radius: 4px;
+  font-size: 13px;
   cursor: pointer;
-  font-size: 12px;
-  margin-top: 0.8rem;
   transition: background-color 0.3s;
 }
 
 .btn-eliminar-comentario:hover {
-  background-color: #c0392b;
+  background-color: #c82333;
 }
 
 .receta-actions {

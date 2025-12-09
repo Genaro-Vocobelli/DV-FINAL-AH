@@ -11,8 +11,10 @@ function NuevaReceta() {
     section: '',
     link: '',
     img: '',
-    chefId: ''
+    chefId: '',
+    estado: 'publicada'  
   });
+  
   const [chefs, setChefs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -44,7 +46,6 @@ function NuevaReceta() {
     setError('');
     setLoading(true);
 
-    // Validaciones
     if (!formData.name || !formData.description || !formData.section || !formData.img) {
       setError('Los campos nombre, descripción, categoría e imagen son obligatorios');
       setLoading(false);
@@ -161,6 +162,19 @@ function NuevaReceta() {
               onChange={handleChange}
               placeholder="https://youtube.com/watch?v=..."
             />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="estado">Estado de la receta</label>
+            <select
+              id="estado"
+              name="estado"
+              value={formData.estado}
+              onChange={handleChange}
+            >
+              <option value="publicada">Publicada</option>
+              <option value="borrador">Borrador</option>
+            </select>
           </div>
 
           <div className="form-actions">

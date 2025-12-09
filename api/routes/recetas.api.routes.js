@@ -19,4 +19,11 @@ router.delete("/:id", verificarAutenticacion, controllers.deleteRecipe)        /
 router.put("/:id", verificarAutenticacion, controllers.reemplazarRecipe)       // PUT /api/recetas/:id
 router.patch("/:id", verificarAutenticacion, controllers.actualizarRecipe)     // PATCH /api/recetas/:id
 
+// Rutas para cambiar estado
+router.patch("/:id/estado", verificarAutenticacion, controllers.cambiarEstado)
+
+// Rutas de colaboradores
+router.post("/:id/colaboradores", verificarAutenticacion, controllers.agregarColaborador)
+router.delete("/:id/colaboradores/:username", verificarAutenticacion, controllers.eliminarColaborador)
+
 export default router

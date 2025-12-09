@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { recetasService } from '../services/recetasService';
 import { comentariosService } from '../services/comentariosService';
+import { chefsService } from '../services/chefsService';
 import { useAuth } from '../context/AuthContext';
+import ColaboradoresManager from '../components/ColaboradoresManager';
 import './RecetaDetalle.css';
 
 function RecetaDetalle() {
   const { id } = useParams();
   const { isAuthenticated, usuario } = useAuth();
   const [receta, setReceta] = useState(null);
+  const [chef, setChef] = useState(null);
   const [comentarios, setComentarios] = useState([]);
   const [nuevoComentario, setNuevoComentario] = useState('');
   const [loading, setLoading] = useState(true);
@@ -23,8 +26,19 @@ function RecetaDetalle() {
     try {
       const data = await recetasService.getById(id);
       setReceta(data);
+      
+      // Cargar chef si existe
+      if (data.chefId) {
+        try {
+          const chefData = await chefsService.getById(data.chefId);
+          setChef(chefData);
+        } catch (err) {
+          console.error('Error al cargar chef:', err);
+        }
+      }
     } catch (err) {
       setError('Error al cargar la receta');
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -71,6 +85,10 @@ function RecetaDetalle() {
   if (error) return <div className="error-message">{error}</div>;
   if (!receta) return <div className="error-message">Receta no encontrada</div>;
 
+  // Verificar si es propia comparando ObjectId como strings
+  const esPropia = usuario && receta.userId && 
+    (receta.userId === usuario._id || receta.userId.toString() === usuario._id);
+
   return (
     <div className="receta-detalle-container">
       <div className="receta-detalle">
@@ -87,10 +105,11 @@ function RecetaDetalle() {
           <h2>Descripción</h2>
           <p>{receta.description}</p>
 
-          {receta.chef && (
+          {chef && (
             <div className="chef-info">
-              <h3>Chef: {receta.chef.nombre}</h3>
-              <p>{receta.chef.descripcion}</p>
+              <h3>Chef: {chef.nombre}</h3>
+              <p>{chef.descripcion}</p>
+              {chef.especialidad && <p><strong>Especialidad:</strong> {chef.especialidad}</p>}
             </div>
           )}
 
@@ -107,22 +126,23 @@ function RecetaDetalle() {
         <div className="comentarios-section">
           <h2>Comentarios ({comentarios.length})</h2>
 
-          {isAuthenticated() && (
-            <form onSubmit={handleSubmitComentario} className="comentario-form">
+          {isAuthenticated() ? (
+            <div className="comentario-form-container">
               <textarea
                 value={nuevoComentario}
                 onChange={(e) => setNuevoComentario(e.target.value)}
                 placeholder="Escribe tu comentario..."
                 rows="3"
-                required
               />
-              <button type="submit" className="btn-primary">
+              <button 
+                onClick={handleSubmitComentario}
+                className="btn-primary"
+                disabled={!nuevoComentario.trim()}
+              >
                 Publicar comentario
               </button>
-            </form>
-          )}
-
-          {!isAuthenticated() && (
+            </div>
+          ) : (
             <p className="login-message">
               <Link to="/login">Inicia sesión</Link> para comentar
             </p>
@@ -151,6 +171,12 @@ function RecetaDetalle() {
             ))}
           </div>
         </div>
+
+        <ColaboradoresManager 
+          receta={receta} 
+          esPropia={esPropia}
+          onActualizar={cargarReceta}
+        />
 
         <div className="receta-actions">
           <Link to="/" className="btn-secondary">

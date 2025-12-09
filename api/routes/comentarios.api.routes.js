@@ -5,11 +5,11 @@ import { verificarAutenticacion } from "../../middlewares/auth.middleware.js"
 const router = express.Router()
 
 // Ruta pública - Ver comentarios de una receta
-router.get("/receta/:recetaId", controllers.getComentariosByReceta)  // GET /api/comentarios/receta/:recetaId
+router.get("/receta/:recetaId", controllers.getComentariosByReceta)
 
 // Rutas protegidas - Crear, editar y eliminar comentarios
-router.post("/", verificarAutenticacion, controllers.crearComentario)         // POST /api/comentarios
-router.patch("/:id", verificarAutenticacion, controllers.editarComentario)    // PATCH /api/comentarios/:id
-router.delete("/:id", verificarAutenticacion, controllers.borrarComentario)   // DELETE /api/comentarios/:id
+router.post("/", verificarAutenticacion, controllers.crearComentario)
+router.patch("/:id", verificarAutenticacion, controllers.editarComentario)
+router.delete("/:id", verificarAutenticacion, controllers.borrarComentario)
 
 export default router

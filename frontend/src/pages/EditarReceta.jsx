@@ -1,24 +1,25 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { recetasService } from '../services/recetasService';
-import { chefsService } from '../services/chefsService';
-import './NuevaReceta.css';
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { recetasService } from "../services/recetasService";
+import { chefsService } from "../services/chefsService";
+import "./NuevaReceta.css";
 
 function EditarReceta() {
   const { id } = useParams();
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    section: '',
-    link: '',
-    img: '',
-    chefId: ''
+    name: "",
+    description: "",
+    section: "",
+    link: "",
+    img: "",
+    chefId: "",
+    estado: "publicada",
   });
   const [chefs, setChefs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loadingReceta, setLoadingReceta] = useState(true);
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,16 +30,29 @@ function EditarReceta() {
   const cargarReceta = async () => {
     try {
       const receta = await recetasService.getById(id);
+
+      
+      if (receta.estado === "archivada") {
+        setError(
+          "Esta receta está archivada y no se puede editar. Primero cambia su estado desde 'Mis Recetas'."
+        );
+        
+        setTimeout(() => {
+          navigate("/mis-recetas");
+        }, 3000);
+      }
+
       setFormData({
-        name: receta.name || '',
-        description: receta.description || '',
-        section: receta.section || '',
-        link: receta.link || '',
-        img: receta.img || '',
-        chefId: receta.chefId || ''
+        name: receta.name || "",
+        description: receta.description || "",
+        section: receta.section || "",
+        link: receta.link || "",
+        img: receta.img || "",
+        chefId: receta.chefId || "",
+        estado: receta.estado || "publicada",
       });
     } catch (err) {
-      setError('Error al cargar la receta');
+      setError("Error al cargar la receta");
     } finally {
       setLoadingReceta(false);
     }
@@ -49,24 +63,31 @@ function EditarReceta() {
       const data = await chefsService.getMisChefs();
       setChefs(data);
     } catch (err) {
-      console.error('Error al cargar chefs:', err);
+      console.error("Error al cargar chefs:", err);
     }
   };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
-    if (!formData.name || !formData.description || !formData.section || !formData.img) {
-      setError('Los campos nombre, descripción, categoría e imagen son obligatorios');
+    if (
+      !formData.name ||
+      !formData.description ||
+      !formData.section ||
+      !formData.img
+    ) {
+      setError(
+        "Los campos nombre, descripción, categoría e imagen son obligatorios"
+      );
       setLoading(false);
       return;
     }
@@ -74,13 +95,13 @@ function EditarReceta() {
     try {
       const recetaData = {
         ...formData,
-        chefId: formData.chefId || null
+        chefId: formData.chefId || null,
       };
-      
+
       await recetasService.update(id, recetaData);
-      navigate('/mis-recetas');
+      navigate("/mis-recetas");
     } catch (err) {
-      setError(err.response?.data?.message || 'Error al editar la receta');
+      setError(err.response?.data?.message || "Error al editar la receta");
     } finally {
       setLoading(false);
     }
@@ -182,20 +203,30 @@ function EditarReceta() {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="estado">Estado de la receta</label>
+            <select
+              id="estado"
+              name="estado"
+              value={formData.estado}
+              onChange={handleChange}
+            >
+              <option value="publicada">Publicada</option>
+              <option value="borrador">Borrador</option>
+              <option value="archivada">Archivada</option>
+            </select>
+          </div>
+
           <div className="form-actions">
-            <button 
-              type="button" 
-              onClick={() => navigate('/mis-recetas')}
+            <button
+              type="button"
+              onClick={() => navigate("/mis-recetas")}
               className="btn-secondary"
             >
               Cancelar
             </button>
-            <button 
-              type="submit" 
-              className="btn-primary"
-              disabled={loading}
-            >
-              {loading ? 'Guardando...' : 'Guardar Cambios'}
+            <button type="submit" className="btn-primary" disabled={loading}>
+              {loading ? "Guardando..." : "Guardar Cambios"}
             </button>
           </div>
         </form>
